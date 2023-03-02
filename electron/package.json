@@ -1,27 +1,39 @@
 {
   "name": "unified-auctions",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "MakerDAO Unified Auctions Electron App",
   "main": "main.js",
   "build": {
     "productName": "Unified Auctions UI",
     "appId": "com.makerdao.unified-auctions",
     "mac": {
+      "target": "dmg",
       "category": "public.app-category.finance"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage"
     },
     "directories": {
       "output": "out"
     },
     "files": [
       "main.js",
+      "preload.js",
+      "helpers.js",
       "dist/**/*"
     ]
   },
   "scripts": {
     "preinstall": "cd ../frontend && npm ci",
     "build": "(cd ../frontend && cross-env ENABLE_FILE_PROTOCOL=true npm run generate) && npx copyfiles -a -u 2 \"../frontend/dist/**/*\" .",
-    "start": "electron .",
-    "distribute": "rm -rf dist out && npm run build && electron-builder"
+    "dist": "rm -rf dist out && npm run build && electron-builder",
+    "start": "electron ."
+  },
+  "repository": {
+    "url": "https://github.com/LukSteib/personal-unified-auctions-ui-fork"
   },
   "author": "SIDESTREAM GmbH",
   "devDependencies": {
@@ -29,5 +41,8 @@
     "cross-env": "^7.0.3",
     "electron": "^22.1.0",
     "electron-builder": "^23.6.0"
+  },
+  "dependencies": {
+    "electron-updater": "^5.3.0"
   }
 }
